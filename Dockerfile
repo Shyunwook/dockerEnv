@@ -1,6 +1,17 @@
 FROM python:3.7.1
 
+# 이미지 생성 과정에서 실행할 명령어
+# RUN pip3 install flask
+
+# 이미지를 생성하는 과정에서 해당 이미지 안에 특정 파일을 미리 넣어 놓는 것
+# 컨테이너 초기화에 사용될 무엇!
+# 예를 들어 테이블 생성 쿼리라던가... 바로 실생될 무엇
+
+# volume 과는 다른게 volume은 컨테이너 생성되어 실행 될 때 컨테이너 내부의 특정공간과 외부의 공간을 연결하는것.
+# COPY
+
+# 이미지 내에서 명령어를 실행할 디렉토리
 WORKDIR /tmp
 
-CMD ["/bin/bash"]
-# CMD ["python test.py", "-OPTIONAL_FLAG"]
+# 컨테이너 생성시 실행할 명령어
+# CMD ["python", "test.py"]
