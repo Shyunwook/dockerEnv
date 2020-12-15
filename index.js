@@ -23,7 +23,6 @@ let terminalServer = new Terminal({
 
 terminalServer.onclosed = (code, signal) => {
   console.log("Terminal closed - " + code + ", " + signal);
-  app.quit();
 };
 terminalServer.onopened = () => {
   console.log("Connected to remote");

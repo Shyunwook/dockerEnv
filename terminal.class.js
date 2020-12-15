@@ -104,18 +104,6 @@ class Terminal {
       this.onresize = () => {};
       this.ondisconnected = () => {};
 
-      this.tty = this.Pty.spawn("docker", ["exec", "-it", "py", "python"], {
-        name: "xterm-color",
-        cols: 80,
-        rows: 24,
-        cwd: process.env.PWD,
-        env: process.env,
-      });
-
-      this.tty.on("exit", (code, signal) => {
-        this.onclosed(code, signal);
-      });
-
       this.wss = new this.Websocket({
         port: opts.port || 3000,
         clientTracking: true,
@@ -130,7 +118,19 @@ class Terminal {
 
       this.wss.on("connection", (ws) => {
         this.onopened();
-        // this.tty.write("docker exec -it py python\r");
+
+        this.tty = this.Pty.spawn("docker", ["exec", "-it", "py", "python", "/tmp/input.py"], {
+          name: "xterm-color",
+          cols: 80,
+          rows: 24,
+          cwd: process.env.PWD,
+          env: process.env,
+        });
+
+        this.tty.on("exit", (code, signal) => {
+          this.onclosed(code, signal);
+        });
+
         ws.on("message", (msg) => {
           if (msg.startsWith("ESCAPED|-- ")) {
             if (msg.startsWith("ESCAPED|-- RESIZE:")) {
@@ -144,6 +144,7 @@ class Terminal {
             this.tty.write(msg);
           }
         });
+
         this.tty.on("data", (data) => {
           try {
             ws.send(data);

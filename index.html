@@ -24,6 +24,7 @@
       var term, socket, fit, resize;
       window.onload = function () {
         term = new Terminal({ cols: 80, rows: 24 });
+        console.log(term);
         const fitAddon = new FitAddon.FitAddon();
 
         term.loadAddon(fitAddon);
@@ -42,30 +43,6 @@
         socket.onerror = (e) => {
           throw e;
         };
-
-        // fit = () => {
-        //   term.fit();
-        //   setTimeout(() => {
-        //     sendSizeToServer();
-        //   }, 50);
-        // };
-
-        // resize = (cols, rows) => {
-        //   term.resize(cols, rows);
-        //   sendSizeToServer();
-        // };
-
-        // function sendSizeToServer() {
-        //   let cols = term.cols.toString();
-        //   let rows = term.rows.toString();
-        //   while (cols.length < 3) {
-        //     cols = "0" + cols;
-        //   }
-        //   while (rows.length < 3) {
-        //     rows = "0" + rows;
-        //   }
-        //   socket.send("ESCAPED|-- RESIZE:" + cols + ";" + rows);
-        // }
       };
 
       window.terminalRemote = new Terminal({
@@ -74,6 +51,11 @@
         host: "127.0.0.1",
         port: 3000,
       });
+
+      window.terminalRemote.fit();
+      // setTimeout(() => {
+
+      // }, 500);
 
       // Wait for terminal to be initialized then resize it to fit in the container
       // setTimeout(() => {
