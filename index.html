@@ -6,9 +6,9 @@
 
     <link rel="stylesheet" href="./node_modules/xterm/css/xterm.css" />
 
-    <script src="./node_modules/xterm/lib/xterm.js"></script>
+    <!-- <script src="./node_modules/xterm/lib/xterm.js"></script>
     <script src="./node_modules/xterm-addon-fit/lib/xterm-addon-fit.js"></script>
-    <script src="./node_modules/xterm-addon-attach/lib/xterm-addon-attach.js"></script>
+    <script src="./node_modules/xterm-addon-attach/lib/xterm-addon-attach.js"></script> -->
 
     <style>
       div#terminal {
@@ -18,9 +18,26 @@
     </style>
   </head>
   <body>
-    <div id="terminal-container"></div>
-
+    <!-- <div id="terminal-container"></div> -->
     <script>
+      const metaTag = document.createElement("meta");
+      (metaTag.name = "viewport"),
+        (metaTag.content = "width=device-width, initial-scale=1"),
+        document.getElementsByTagName("head")[0].appendChild(metaTag),
+        window.addEventListener(
+          "message",
+          function (e) {
+            const t = document.getElementById("iframe"),
+              n = e.data[1];
+            t.style.height = n + "px";
+          },
+          !1
+        ),
+        document.write(
+          '<iframe id="iframe" style="height:100vh;border:0;box-shadow:none;outline:0;" src="https://stackers.circle.so/c/[SPACE_SLUG_GOES_HERE]/[TOPIC_SLUG_GOES_HERE]?iframe=true&?topic=true" scrolling="no" width="100%"></iframe>'
+        );
+    </script>
+    <!-- <script>
       var term, socket, fit, resize;
       window.onload = function () {
         term = new Terminal({ cols: 80, rows: 24 });
@@ -61,6 +78,6 @@
       // setTimeout(() => {
       //   term.fit();
       // }, 500);
-    </script>
+    </script> -->
   </body>
 </html>
